@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getById(Long id) {
-		User user = userdao.findById(id).orElseThrow(()->new ResourceNotFoundException("Given Id is not present"));
+		User user = userdao.findById(id).orElseThrow(()->new ResourceNotFoundException("Given Id "+ id +" is not present"));
 //		System.out.println("User is found "+user);
 		return user;
 	}

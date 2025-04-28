@@ -160,7 +160,7 @@ public class OrderEntityServiceImpl implements OrderEntityService {
 				 				 
 			 }
 			 
-			 System.out.println(" Size asddasd"+ orderItemResponseDto.size());
+//			 System.out.println(" Size asddasd"+ orderItemResponseDto.size());
 
 			 
 			 singleOrderSummary.setOrderItemResponseDto(orderItemResponseDto);

@@ -30,25 +30,27 @@ import lombok.ToString;
 @ToString(exclude = "password")
 public class User extends BaseEntity{
 
-	@NotBlank
+	@NotBlank(message = "First Name should not be blank")
 	@Column(length = 20)
 	private String firstName;
 	
-	@NotBlank
+	@NotBlank(message = "Last Name should not be blank")
 	@Column(length = 20)
 	private String lastName;
 	
 	@Column(length = 10)
 	private String gender;
 	
+	@NotBlank(message = "Date of Birth should not be blank")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dob;
 	
+	@NotBlank(message = "Mobile number should not be blank")
 	@Pattern(regexp = "^[0-9]{10}$", message = "Invalid mobile number")
 	@Column(length = 20,unique = true)
 	private String mobNo;
 	
-	@Email @NotBlank
+	@Email @NotBlank(message = "Email should not be blank")
 	@Column(length = 20,unique = true)
 	private String email;
 	

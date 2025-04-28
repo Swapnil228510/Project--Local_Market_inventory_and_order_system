@@ -29,6 +29,8 @@ import com.app.pojos.User;
 import com.app.service.UserService;
 import com.app.service.UserServiceImpl;
 
+import jakarta.validation.Valid;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/users")
@@ -41,7 +43,7 @@ public class UserController {
 	private ModelMapper mapper;
 	
 	@PostMapping("/signUp")
-	public ResponseEntity<?> userSignUp(@RequestBody RegisterUserDto registerRequest) {
+	public ResponseEntity<?> userSignUp(@RequestBody @Valid RegisterUserDto registerRequest) {
 		
 		RegisterUserDto savedUser = null;
 		
