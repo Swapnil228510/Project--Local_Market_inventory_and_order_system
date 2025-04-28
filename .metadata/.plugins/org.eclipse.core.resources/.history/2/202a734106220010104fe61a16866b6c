@@ -1,0 +1,23 @@
+package com.app.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dao.CategoryDao;
+import com.app.dto.ApiResponse;
+
+@Service
+@Transactional
+public class CategoryServiceImpl implements CategoryService {
+
+	@Autowired
+	private CategoryDao categoryDao;
+	
+	@Override
+	public ApiResponse addCategories(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

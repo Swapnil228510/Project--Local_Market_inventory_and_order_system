@@ -1,0 +1,8 @@
+package com.app.dto;
+
+public class OrderItemResponseDto {
+
+	private String name; 
+	private double quantity;
+	private double unitPrice;
+}

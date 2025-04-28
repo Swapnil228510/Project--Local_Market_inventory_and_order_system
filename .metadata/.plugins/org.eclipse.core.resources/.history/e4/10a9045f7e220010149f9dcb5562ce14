@@ -1,0 +1,36 @@
+package com.app.service;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dao.ProductDao;
+import com.app.dto.ApiResponse;
+import com.app.dto.ProductDto;
+import com.app.pojos.Product;
+
+@Service
+@Transactional
+public class ProductServiceImpl implements ProductService {
+	
+	@Autowired
+	private ProductDao productDao;
+	
+	@Autowired
+	private ModelMapper mapper;
+
+	@Override
+	public ApiResponse addProductDetails(Product productDetails) {
+		Product SavedProduct = productDao.save(productDetails);
+		System.out.println("dsfsfsfd "+productDetails.getCategory());
+		return new ApiResponse(" Product detaila has been added", true);
+	}
+
+	@Override
+	public ApiResponse addProductDetails(ProductDto productDetailsdto) {
+		mappe
+		return null;
+	}
+
+}

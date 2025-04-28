@@ -1,0 +1,11 @@
+package com.app.dto;
+
+import lombok.Data;
+
+@Data
+public class OrderItemResponseDto {
+
+	private String name; 
+	private double quantity;
+	private double unitPrice;
+}

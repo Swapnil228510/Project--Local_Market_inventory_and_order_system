@@ -1,0 +1,12 @@
+package com.app.service;
+
+import com.app.dto.RegisterUserDto;
+import com.app.dto.SignInDto;
+import com.app.pojos.User;
+
+public interface UserService {
+
+	RegisterUserDto registerUser(RegisterUserDto registerRequest);
+	
+	 SignInDto signInUser(SignInDto signInRequest);
+}

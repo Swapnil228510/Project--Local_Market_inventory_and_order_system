@@ -1,0 +1,10 @@
+package com.app.dto;
+
+import jakarta.persistence.Column;
+
+public class CategoryDto {
+	
+	@Column(length = 20)
+	private String name;
+
+}

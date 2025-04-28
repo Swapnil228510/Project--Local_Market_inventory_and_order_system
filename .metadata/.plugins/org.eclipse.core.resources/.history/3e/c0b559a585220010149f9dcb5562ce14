@@ -1,0 +1,52 @@
+package com.app.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dao.ProductDao;
+import com.app.dto.ApiResponse;
+import com.app.dto.ProductDto;
+import com.app.pojos.Category;
+import com.app.pojos.Product;
+
+@Service
+@Transactional
+public class ProductServiceImpl implements ProductService {
+	
+	@Autowired
+	private ProductDao productDao;
+	
+	@Autowired
+	private ModelMapper mapper;
+
+	@Override
+	public ApiResponse addProductDetails(ProductDto productDetailsdto) {
+		Product productdetails =  mapper.map(productDetailsdto, Product.class);
+		
+		Category category = new Category(); // in Product.pojo ,category takes object so we create its object and reassign the same id 
+		category.setId(productDetailsdto.getCategoryId());
+		productdetails.setCategory(category);
+		
+		productDao.save(productdetails);
+		return new ApiResponse(" Product detaila has been added", true);
+	}
+
+	@Override
+	public List<ProductDto>  getAllProduct() {
+		List<Product> productList =  productDao.findAll();
+		List<ProductDto> allProductList = new ArrayList<ProductDto>();
+		  for(Product product : productList) {
+			  allProductList.add(mapper.map(product, ProductDto.class));
+		  }
+		
+		System.out.println(productList.toString());
+//		productList.forEach(System.out::println);
+		return productList;
+	}
+
+}

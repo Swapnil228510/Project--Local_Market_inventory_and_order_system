@@ -1,0 +1,14 @@
+package com.app.service;
+
+import java.util.Optional;
+
+import com.app.dto.RegisterUserDto;
+import com.app.dto.SignInDto;
+import com.app.pojos.User;
+
+public interface UserService {
+
+	RegisterUserDto registerUser(RegisterUserDto registerRequest);
+	
+	Optional<SignInDto>  signInUser(SignInDto signInRequest);
+}

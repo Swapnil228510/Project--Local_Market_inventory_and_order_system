@@ -1,0 +1,58 @@
+package com.app.pojos;
+
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Entity
+@Table(name = "user")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString(exclude = "password")
+public class User extends BaseEntity{
+
+	@Column(length = 20)
+	private String firstName;
+	
+	@Column(length = 20)
+	private String lastName;
+	
+	@Column(length = 10)
+	private String gender;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dob;
+	
+	@Pattern(regexp = "^[0-9]{10}$", message = "Invalid mobile number")
+	@Column(length = 20,unique = true)
+	private String mobNo;
+	
+	@Column(length = 20,unique = true)
+	private String email;
+	
+	@Column(nullable = false)
+	private String password;
+	
+	@Column(length = 20)
+	private String city;
+	
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	
+	
+	
+}

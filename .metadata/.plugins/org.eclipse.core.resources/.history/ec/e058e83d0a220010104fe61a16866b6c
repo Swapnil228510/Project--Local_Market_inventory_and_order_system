@@ -1,0 +1,40 @@
+package com.app.service;
+
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dao.CategoryDao;
+import com.app.dto.ApiResponse;
+import com.app.dto.CategoryDto;
+import com.app.pojos.Category;
+
+@Service
+@Transactional
+public class CategoryServiceImpl implements CategoryService {
+
+	@Autowired
+	private CategoryDao categoryDao;
+	
+	@Autowired
+	private ModelMapper mapper;
+	
+	@Override
+	public ApiResponse addCategories(CategoryDto categoryDto) {
+
+		Category category = mapper.map(categoryDto, Category.class);
+
+		categoryDao.save(category);
+		return new ApiResponse(" Category has been added", true);
+	}
+
+	@Override
+	public List<CategoryDto> ListOfCategory() {
+		List<CategoryDto> categoryList= categoryDao.findAll();
+		return categoryList;
+	}
+
+}

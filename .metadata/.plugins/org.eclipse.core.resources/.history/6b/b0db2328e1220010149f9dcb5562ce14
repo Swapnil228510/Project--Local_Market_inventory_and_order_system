@@ -1,0 +1,13 @@
+package com.app.service;
+
+import com.app.dto.ApiResponse;
+import com.app.dto.ComboPlacedOrderDto;
+import com.app.dto.OrderRequestDto;
+import com.app.pojos.OrderEntity;
+
+public interface OrderEntityService {
+
+	public ApiResponse placeOrder(OrderRequestDto orderDto); 
+	
+	public ComboPlacedOrderDto getPlacedOrderDetailsByUserId (Long userId);
+}
