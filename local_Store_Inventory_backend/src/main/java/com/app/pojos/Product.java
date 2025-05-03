@@ -25,7 +25,7 @@ import lombok.ToString;
 //@ToString(exclude = "orderItems")
 public class Product extends BaseEntity {
 	
-	@Column(length = 20, unique = true)
+	@Column(length = 200, unique = true)
 	private String name;
 	
 	@Column

@@ -31,7 +31,7 @@ public class RegisterUserDto {
 	//@Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})",message = "invalid password format!!!!")
 	private String password;
 
-	@Pattern(regexp = "^[0-9]{10}$" ,message = "invalid password format!!!!")
+	@Pattern(regexp = "^[0-9]{10}$" ,message = "invalid mobile format!!!!")
 	private String mobNo;
 	
 	private String city;

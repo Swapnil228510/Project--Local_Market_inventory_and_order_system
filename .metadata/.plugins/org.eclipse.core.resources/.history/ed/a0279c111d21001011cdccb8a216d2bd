@@ -1,9 +1,0 @@
-package com.app.pojos;
-
-import jakarta.persistence.Column;
-
-public class Category extends BaseEntity {
-
-	@Column(length = 20)
-	private String name;
-}

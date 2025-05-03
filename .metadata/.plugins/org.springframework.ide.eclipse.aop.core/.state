@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aop-reference-model>
-<aop-project name="local_Store_Inventory"/>
+<aop-project name="local_Store_Inventory_backend"/>
 </aop-reference-model>

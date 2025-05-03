@@ -1,7 +1,0 @@
-package com.app.pojos;
-
-public class OrderItem extends BaseEntity {
-
-	private double quantity;
-	private double unitPrice;
-}

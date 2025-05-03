@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,17 +31,20 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private ModelMapper mapper;
 	
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder encoder;
+	
+	
 	@Override
 	public RegisterUserDto registerUser(RegisterUserDto registerRequest) {
 		User user = mapper.map(registerRequest, User.class);
 		
-//		user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 		user.setRole(Role.CUSTOMER);
+		user.setPassword(encoder.encode(registerRequest.getPassword()));
 		
 		User savedUser = userdao.save(user);
 
+		System.out.println(" udf user "+savedUser.toString() );
 		return mapper.map(savedUser,RegisterUserDto.class);
 	}
 
@@ -48,6 +54,8 @@ public class UserServiceImpl implements UserService {
 		User user = userdao.findByEmailAndPassword(email, password).orElseThrow(()-> new RuntimeException("User needs to register"));
 		return user;
 	}
+	
+
 
 
 	@Override

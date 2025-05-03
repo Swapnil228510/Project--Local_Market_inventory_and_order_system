@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.StreamingHttpOutputMessage.Body;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,12 +44,15 @@ public class UserController {
 	@Autowired
 	private ModelMapper mapper;
 	
+	
+	
 	@PostMapping("/signUp")
 	public ResponseEntity<?> userSignUp(@RequestBody @Valid RegisterUserDto registerRequest) {
 		
 		RegisterUserDto savedUser = null;
 		
 		savedUser = userService.registerUser(registerRequest);
+//		System.out.println("sadfsfsf register user"+ savedUser);
 		
 		if(savedUser != null) {
 			return  ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("User "+savedUser.getFirstName()+ " "+savedUser.getLastName() +" successfully registered",true));
@@ -56,15 +61,17 @@ public class UserController {
 	}
 		
 	
-	@PostMapping("/signIn")
-	public ResponseEntity<?> SignInUserCont (@RequestBody SignInDto signInDto) {
-		User user = userService.signInUser(signInDto.getEmail(), signInDto.getPassword());
-		
-		if(user != null) {
-			return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("User is present", true));
-		}else 
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("User needs to register", false)); 
-	}
+	// CREATED SIGNIN WITH SPRING SECURITY
+//	@PostMapping("/signIn")
+//	public ResponseEntity<?> SignInUserCont (@RequestBody SignInDto signInDto) {
+//		User user = userService.signInUser(signInDto.getEmail(), signInDto.getPassword());
+//		
+//		if(user != null) {
+//			return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("User is present", true));
+//		}else 
+//			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("User needs to register", false)); 
+//	}
+	
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?>  getProfileById(@PathVariable Long id) {
@@ -78,10 +85,13 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Invalid Id", false)); 
 	}
 	
+	//ADMIN API
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/getUsers")
 	public ResponseEntity<?> showAllUser() {
 		List<User> userList = userService.getAllUser();
-		
+		System.out.println("@@@@@ Authorities: " + SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+
 		List<FoundByIdDto> userDtoList = new ArrayList<FoundByIdDto>();
 		
 		if(userList.size() != 0) {
@@ -100,6 +110,7 @@ public class UserController {
 		
 	}
 	
+	
 	@PutMapping("/updateUser/{id}")
 	public ResponseEntity<?> updateUserWithId(@RequestBody FoundByIdDto userDto, @PathVariable Long id) {
 		
@@ -107,6 +118,8 @@ public class UserController {
 		
 	}
 	
+	//ADMIN API
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/removeUser/{id}")
 	public ResponseEntity<?> deleteUserById( @PathVariable Long id){
 		return ResponseEntity.status(HttpStatus.OK).body(userService.deleteUser(id));

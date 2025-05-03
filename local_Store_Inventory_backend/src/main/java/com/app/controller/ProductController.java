@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,8 @@ public class ProductController {
 	@Autowired
 	private  ProductService productService;
 	
+	//Staff API
+	@PreAuthorize("hasRole('STAFF')")
 	@PostMapping("/addProducts")
 	public ResponseEntity<?> AddProductDetails(@RequestBody ProductDto productDetailsdto){
 		
@@ -50,17 +53,22 @@ public class ProductController {
 		
 	}
 	
+	//STAFF API
+	@PreAuthorize("hasRole('STAFF')")
 	@PutMapping("/updateProduct/{id}")
 	public ResponseEntity<?> updatedPrduct(@RequestBody ProductDto updatedProdDto, @PathVariable Long id){
 		
 		return ResponseEntity.status(HttpStatus.OK).body(productService.updateProduct(updatedProdDto, id));
 	}
 	
+	//ADMIN API
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("deleteProduct/{id}")
 	public ResponseEntity<?> deleteProduct(@PathVariable Long id){
 		
 		return ResponseEntity.status(HttpStatus.OK).body(productService.deleteProduct(id));
 	}
+	
 	
 	@GetMapping("/byCategoryId/{categoryId}")
 	public ResponseEntity<?> findProductByCategoryId(@PathVariable Long categoryId){

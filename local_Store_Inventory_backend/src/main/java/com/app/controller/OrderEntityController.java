@@ -3,6 +3,7 @@ package com.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ public class OrderEntityController {
 	@Autowired
 	private OrderEntityService orderEntityService;
 	
+
 	@PostMapping("/placeOrder")
 	public ResponseEntity<?> placeOrder(@RequestBody OrderRequestDto orderDto){
 		
@@ -35,11 +37,15 @@ public class OrderEntityController {
 		return ResponseEntity.status(HttpStatus.OK).body(orderEntityService.getPlacedOrderDetailsByUserId(userId));
 	}
 	
+	//ADMIN API
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping
 	public ResponseEntity<?> getAllOrders(){
 		return ResponseEntity.status(HttpStatus.OK).body(orderEntityService.getAllOrder());	
 	}
 	
+	// STAFF/ADMIN API
+	@PreAuthorize("hasAnyRole('STAFF','ADMIN')")
 	@GetMapping("/orderByOrderId/{orderId}")
 	public ResponseEntity<?> getOrderByOrderId (@PathVariable Long orderId){
 		return ResponseEntity.status(HttpStatus.FOUND).body(orderEntityService.getOrderDetailsWithOrderId(orderId));

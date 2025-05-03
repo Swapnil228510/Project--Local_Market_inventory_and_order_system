@@ -4,6 +4,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,6 +30,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<?> handleRuntimeException(RuntimeException e){
 		System.out.println(" in handle rruntime global exception" + e);
 		
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Something went wrong: "+e.getMessage(),false));
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Something went wrong buddy: "+e.getMessage(),false));
+	}
+	
+	@ExceptionHandler(AuthorizationDeniedException.class)
+	public ResponseEntity<?> handleAuthorizationDeniedException(AuthorizationDeniedException e){
+		System.out.println(" in handle AuthorizationDeniedException global exception" + e);
+		
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiResponse("You are Unauthorize : "+ e.getMessage(), false));
 	}
 }
