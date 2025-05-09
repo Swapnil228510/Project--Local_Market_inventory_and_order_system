@@ -11,7 +11,9 @@ const PrivateRoute = ({ children, role }) => {
 
   try {
     const decode = jwtDecode(token);
-    const userRole = decode?.role;
+    console.log(" decode " + decode.authorities);
+    console.log(" decode role " + role);
+    const userRole = decode?.authorities;
 
     if (userRole != role) {
       return <Navigate to="/" />;

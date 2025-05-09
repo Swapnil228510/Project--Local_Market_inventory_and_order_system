@@ -5,7 +5,7 @@ import { baseURL } from '../appConfig';
 const axiosInstance = axios.create({
     baseURL,
     headers :  {
-        'context-type' : 'application.json',
+        'context-type' : 'application/json',
     }
 });
 

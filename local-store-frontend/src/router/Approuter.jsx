@@ -22,7 +22,7 @@ const Approuter = () => {
         <Route
           path="/customer"
           element={
-            <PrivateRoute role="CUSTOMER">
+            <PrivateRoute role="ROLE_CUSTOMER">
               <CustomerHome />
             </PrivateRoute>
           }
@@ -31,7 +31,7 @@ const Approuter = () => {
         <Route
           path="/staff"
           element={
-            <PrivateRoute role="STAFF">
+            <PrivateRoute role="ROLE_STAFF">
               <StaffDashboard />
             </PrivateRoute>
           }
@@ -40,7 +40,7 @@ const Approuter = () => {
         <Route
           path="/admin"
           element={
-            <PrivateRoute role="ADMIN">
+            <PrivateRoute role="ROLE_ADMIN">
               <AdminPanel />
             </PrivateRoute>
           }

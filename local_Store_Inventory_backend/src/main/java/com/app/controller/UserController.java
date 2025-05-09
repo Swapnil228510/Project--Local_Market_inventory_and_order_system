@@ -52,7 +52,6 @@ public class UserController {
 		RegisterUserDto savedUser = null;
 		
 		savedUser = userService.registerUser(registerRequest);
-//		System.out.println("sadfsfsf register user"+ savedUser);
 		
 		if(savedUser != null) {
 			return  ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("User "+savedUser.getFirstName()+ " "+savedUser.getLastName() +" successfully registered",true));
