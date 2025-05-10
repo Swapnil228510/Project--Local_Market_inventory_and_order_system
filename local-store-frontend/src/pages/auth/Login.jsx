@@ -31,8 +31,10 @@ const Login = () => {
       //   console.log(" role " + decoded.authorities);
 
       localStorage.setItem("user", JSON.stringify(response.data));
+      const name = response.data.firstName + " " + response.data.lastName;
+      console.log("name in login " + name.firstName);
 
-      toast.success(" Login successfull");
+      toast.success("Welcome " + `${name}` + " 😄");
 
       //Navigate based on role
 
@@ -58,7 +60,7 @@ const Login = () => {
   return (
     <>
       <CssBaseline />
-      <section className="vh-100">
+      <section className="vh-100 container-fluid px-0">
         <div className="card-body py-5 px-md-5">
           <div className="row d-flex justify-content-center">
             <div className="container-fluid">
@@ -143,8 +145,12 @@ const Login = () => {
                   <img
                     src="/Images/Mom&Dad.jpg"
                     alt="Mom&Dad_Image"
-                    className="w-100 vh-110"
-                    style={{ objectFit: "cover", objectPosition: "left" }}
+                    className="calc(100vh - 0px)"
+                    style={{
+                      height: "100vh",
+                      objectFit: "cover",
+                      objectPosition: "top center",
+                    }}
                   />
                 </div>
               </div>
