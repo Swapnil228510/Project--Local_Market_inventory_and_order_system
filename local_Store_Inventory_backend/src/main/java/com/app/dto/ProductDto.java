@@ -21,4 +21,10 @@ public class ProductDto {
 	
 	private Long categoryId;
 	
+	private String categoryName;
+	
+//	======================= below this addition for image
+	
+	private String imageUrl;
+	
 }

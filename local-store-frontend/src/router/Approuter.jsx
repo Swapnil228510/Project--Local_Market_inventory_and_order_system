@@ -12,6 +12,7 @@ import AdminPanel from "../pages/admin/AdminPanel";
 import NotFound from "../pages/NotFound";
 import LogOut from "../pages/LogOut";
 import Profile from "../pages/Profile";
+import Products from "../pages/Products";
 
 const Approuter = () => {
   return (
@@ -23,6 +24,8 @@ const Approuter = () => {
       <Route path="/aboutUs" element={<AboutUs />} />
       <Route path="/logOut" element={<LogOut />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/products" element={<Products />} />
+      <Route path="/myCart" element={<MyCart />} />
 
       {/* Protected role based routes */}
       <Route
@@ -30,7 +33,7 @@ const Approuter = () => {
         element={
           <PrivateRoute role="ROLE_CUSTOMER">
             <CustomerHome />
-            <MyCart />
+            {/* <MyCart /> */}
           </PrivateRoute>
         }
       />

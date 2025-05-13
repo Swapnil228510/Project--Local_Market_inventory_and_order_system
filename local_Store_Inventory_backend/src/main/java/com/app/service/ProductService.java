@@ -20,5 +20,9 @@ public interface ProductService {
 	
 	List<ProductDto> getProductsByCategoryId(Long categoryId);
 	
+//	==================================
+	
+	Product save(Product product);
+	
 	
 }

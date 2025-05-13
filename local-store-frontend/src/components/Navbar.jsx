@@ -31,9 +31,9 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
+  const items = localStorage.getItem("token");
   const handleAvtarItemList = (e) => {
     console.log(" in navbar logout " + e);
-    const items = localStorage.getItem("token");
     if (items === null) {
       toast.info("Please LogIn first");
     } else if (e === "Logout") {
@@ -48,6 +48,13 @@ const Navbar = () => {
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     document.body.style.backgroundColor = darkMode ? "#fff" : "#121212";
+  };
+  const preLoginMyCart = () => {
+    if (items === null)
+      toast.info(" Please login first to use myCart feature ");
+    else {
+      navigate("/myCart");
+    }
   };
   return (
     <>
@@ -114,19 +121,20 @@ const Navbar = () => {
           </Box>
 
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
-            <Link to="/myCart" style={{ textDecoration: "none" }}>
-              <Button
-                //    variant="outlined"
-                sx={{
-                  color: "white",
-                  borderColor: "white",
-                  fontWeight: 600,
-                  "&:hover": { borderColor: "#ffc107", color: "#ffc107" },
-                }}
-              >
-                My Cart
-              </Button>
-            </Link>
+            {/* <Link to="/myCart" style={{ textDecoration: "none" }}> */}
+            <Button
+              //    variant="outlined"
+              sx={{
+                color: "white",
+                borderColor: "white",
+                fontWeight: 600,
+                "&:hover": { borderColor: "#ffc107", color: "#ffc107" },
+              }}
+              onClick={() => preLoginMyCart()}
+            >
+              My Cart
+            </Button>
+            {/* </Link> */}
           </Box>
 
           <Box

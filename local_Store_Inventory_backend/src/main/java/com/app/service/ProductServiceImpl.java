@@ -2,9 +2,11 @@ package com.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private ModelMapper mapper;
+	
+    @Value("${server.base-url}")
+    private String baseUrl; // e.g., http://localhost:6162  for image 
 
 	@Override
 	public ApiResponse addProductDetails(ProductDto productDetailsdto) {
@@ -37,23 +42,44 @@ public class ProductServiceImpl implements ProductService {
 		return new ApiResponse(" Product details has been added", true);
 	}
 
+//	@Override
+//	public List<ProductDto>  getAllProduct() {
+//		List<Product> productList =  productDao.findAll();
+//		
+//		List<ProductDto> allProductList = new ArrayList<ProductDto>();
+//		  for(Product product : productList) {
+//			  
+//			  ProductDto prod = (mapper.map(product, ProductDto.class));
+//			  prod.setCategoryId(product.getCategory().getId());
+//			  prod.setCategoryName(product.getCategory().getName());
+//			  allProductList.add(prod);			  		  
+//		  }		
+//
+//		return allProductList;
+//	}
+//	========================================================
+	@Override
+	public Product save(Product product) {
+		return productDao.save(product);
+	}
+	
 	@Override
 	public List<ProductDto>  getAllProduct() {
-		List<Product> productList =  productDao.findAll();
-		
-		List<ProductDto> allProductList = new ArrayList<ProductDto>();
-		  for(Product product : productList) {
-			  
-//			  System.out.println(" category  ID "+product.getCategory().getId());
-			  ProductDto prod = (mapper.map(product, ProductDto.class));
-			  prod.setCategoryId(product.getCategory().getId());
-			  allProductList.add(prod);			  		  
-		  }		
-//		System.out.println(productList.toString());
 
-		return allProductList;
+		return productDao.findAll().stream().map(product ->{
+			ProductDto dto = new ProductDto();
+			dto.setId(product.getId());
+			dto.setName(product.getName());
+			dto.setPrize(product.getPrize());
+			dto.setQuantity(product.getQuantity());
+			dto.setCategoryId(product.getCategory().getId());
+			dto.setCategoryName(product.getCategory().getName());
+			dto.setImageUrl(baseUrl+"/uploads/"+product.getImageName());
+			return dto;
+		}).collect(Collectors.toList());
 	}
 
+//	=================================================
 	@Override
 	public ProductDto getProducBytId(Long id) {
 		

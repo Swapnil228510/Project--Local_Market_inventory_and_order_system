@@ -1,8 +1,7 @@
 import React from "react";
-import { toast } from "react-toastify";
 
 const MyCart = () => {
-  return <div>MyCart</div>;
+  return <div>Mycart</div>;
 };
 
 export default MyCart;

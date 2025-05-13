@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
+import Products from "./Products";
 
 const Home = () => {
   return (
@@ -94,6 +95,7 @@ const Home = () => {
             <span className="visually-hidden">Next</span>
           </button>
         </div>
+        <Products />
       </Box>
     </>
   );

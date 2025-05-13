@@ -34,6 +34,9 @@ public class Product extends BaseEntity {
 	@Column(length = 20)
 	private double quantity;
 	
+	@Column(length = 300)
+	private String imageName;
+	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL,orphanRemoval = true)
 	List<OrderItem> orderItems;
 	

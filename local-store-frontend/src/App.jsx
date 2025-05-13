@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Approuter from "./router/Approuter";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import ProductCard from "./components/ProductCard";
 
 function App() {
   return (
