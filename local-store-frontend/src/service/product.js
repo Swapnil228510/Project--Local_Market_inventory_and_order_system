@@ -22,3 +22,7 @@ async function handleRequest(requestFunction){
 export async function getAllProduct(){
     return await handleRequest(()=>axiosInstance.get("/products"));
 }
+
+export async function addProduct(data){
+    return await handleRequest(()=>axiosInstance.post("/products/post",data))
+}

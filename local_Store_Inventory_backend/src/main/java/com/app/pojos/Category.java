@@ -6,6 +6,7 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,6 @@ public class Category extends BaseEntity {
 	@Column(length = 20, unique = true)
 	private String name;
 	
-	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true, mappedBy = "category")
+	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true, mappedBy = "category", fetch = FetchType.EAGER)
 	private List<Product> productList;
 }

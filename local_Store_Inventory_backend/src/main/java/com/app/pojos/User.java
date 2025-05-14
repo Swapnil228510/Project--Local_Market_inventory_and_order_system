@@ -52,7 +52,7 @@ public class User extends BaseEntity{
 	private String mobNo;
 	
 	@Email @NotBlank(message = "Email should not be blank")
-	@Column(length = 20,unique = true)
+	@Column(length = 80,unique = true)
 	private String email;
 	
 	@NotBlank

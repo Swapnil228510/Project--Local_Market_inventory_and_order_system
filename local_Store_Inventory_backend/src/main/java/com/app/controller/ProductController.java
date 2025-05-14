@@ -24,10 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.app.dao.CategoryDao;
 import com.app.dto.ApiResponse;
 import com.app.dto.ProductDto;
+import com.app.pojos.Category;
 import com.app.pojos.Product;
 import com.app.service.ProductService;
+
+import org.springframework.http.MediaType;
 
 @CrossOrigin("*")
 @RestController
@@ -39,6 +43,9 @@ public class ProductController {
 	
     @Value("${upload.dir}")
     private String uploadDir;
+    
+    @Autowired
+    private CategoryDao categoryDao;
 	
 	//Staff API
 	@PreAuthorize("hasRole('STAFF')")
@@ -93,26 +100,41 @@ public class ProductController {
 	
 //	============================================================ below is image handling API
 	
-	@PostMapping("/post")
+	@PostMapping(value ="/post" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> addProduct(
 			@RequestParam("name") String name,           
 			@RequestParam("prize") double prize,
             @RequestParam("quantity") int quantity,
             @RequestParam("categoryName") String categoryName,
+            @RequestParam("description") String description,
             @RequestParam("image") MultipartFile imageFile
 			
 			)throws IOException{
 		
         String imageName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
         Path imagePath = Paths.get(uploadDir, imageName);
+        System.out.println(" name of poduct " + name);
+        System.out.println(">>> Received product POST request for: " + name);
         Files.copy(imageFile.getInputStream(), imagePath);
         
+
         Product product = new Product();
         product.setName(name);
         product.setPrize(prize);
         product.setQuantity(quantity);
-        product.getCategory().setName(categoryName);
+        product.setDescription(description);
         product.setImageName(imageName);
+        
+        
+        Category  category =  categoryDao.findByName(categoryName);
+        
+        if(category == null) {
+        	category = new Category();
+        	category.setName(categoryName);
+        	category = categoryDao.save(category);
+        }
+        
+        product.setCategory(category);
         
         Product savedProduct = productService.save(product);
         

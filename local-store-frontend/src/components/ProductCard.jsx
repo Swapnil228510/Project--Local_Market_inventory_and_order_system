@@ -26,7 +26,7 @@ const ProductCard = ({ product }) => {
       <Card
         sx={{
           maxWidth: 320,
-          height: 320,
+          height: 340,
           margin: 2,
           borderRadius: "16px",
           boxShadow: 5,
@@ -34,6 +34,7 @@ const ProductCard = ({ product }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
+          textAlign: "left",
         }}
       >
         <CardMedia
@@ -75,7 +76,13 @@ const ProductCard = ({ product }) => {
             Category: {product.categoryName}
           </Typography>
         </CardContent>
-        <CardActions>
+        <CardActions
+          sx={{
+            justifyContent: "flex-start",
+            paddingTop: 0,
+            marginTop: "-8px",
+          }}
+        >
           <Button size="small" color="primary">
             Buy
           </Button>

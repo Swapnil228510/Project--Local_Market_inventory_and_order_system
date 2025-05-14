@@ -13,6 +13,7 @@ import NotFound from "../pages/NotFound";
 import LogOut from "../pages/LogOut";
 import Profile from "../pages/Profile";
 import Products from "../pages/Products";
+import ProductForm from "../components/ProductForm";
 
 const Approuter = () => {
   return (
@@ -52,6 +53,24 @@ const Approuter = () => {
         element={
           <PrivateRoute role="ROLE_ADMIN">
             <AdminPanel />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/staff/addproduct"
+        element={
+          <PrivateRoute role={["ROLE_ADMIN", "ROLE_STAFF"]}>
+            <ProductForm />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/staff/product/:productId"
+        element={
+          <PrivateRoute role={["ROLE_STAFF", "ROLE_ADMIN"]}>
+            <ProductForm />
           </PrivateRoute>
         }
       />

@@ -7,5 +7,7 @@ import com.app.pojos.Category;
 
 @Repository
 public interface CategoryDao extends JpaRepository<Category, Long> {
+	
+	public Category findByName(String name);
 
 }
