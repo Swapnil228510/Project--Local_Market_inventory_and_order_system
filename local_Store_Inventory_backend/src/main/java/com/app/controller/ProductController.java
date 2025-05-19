@@ -137,6 +137,7 @@ public class ProductController {
         product.setCategory(category);
         
         Product savedProduct = productService.save(product);
+        System.out.println(savedProduct.getName());
         
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
         
