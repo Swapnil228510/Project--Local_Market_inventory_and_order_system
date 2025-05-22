@@ -58,12 +58,6 @@ public class ProductController {
 		
 	}
 	
-//	@GetMapping
-//	public ResponseEntity<?> showAllProducts(){
-//		
-//		return ResponseEntity.status(HttpStatus.OK).body(productService.getAllProduct());
-//	}
-	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getProductById(@PathVariable Long id){
 		
