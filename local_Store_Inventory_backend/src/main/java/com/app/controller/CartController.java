@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.AddToCartRequestDto;
 import com.app.dto.ApiResponse;
+import com.app.dto.CartUpadateMultipleItemsRequestDto;
 import com.app.service.CartService;
 
 @RestController
@@ -33,9 +35,16 @@ public class CartController {
 	}
 	
 	@GetMapping("/{userId}")
-	public ResponseEntity<?> getCartDetailsbyUserId( @PathVariable Long userId){
+	public ResponseEntity<?> getCartDetailsbyUserId(@PathVariable Long userId){
 		
 		return ResponseEntity.status(HttpStatus.OK).body(cartService.getCartByUserId(userId));
+		
+	}
+	
+	@PutMapping("/update")
+	public ResponseEntity<?> updateCartMultipleItems(@RequestBody CartUpadateMultipleItemsRequestDto upatedItems){
+		
+		return ResponseEntity.status(HttpStatus.OK).body(cartService.updateMultipleCartItems(upatedItems));
 		
 	}
 

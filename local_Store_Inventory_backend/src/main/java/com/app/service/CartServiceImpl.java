@@ -14,13 +14,16 @@ import com.app.dao.ProductDao;
 import com.app.dao.UserDao;
 import com.app.dto.AddToCartRequestDto;
 import com.app.dto.CartItemResponseDto;
+import com.app.dto.CartItemUpdateDto;
 import com.app.dto.CartResponseDto;
+import com.app.dto.CartUpadateMultipleItemsRequestDto;
 import com.app.exception.ResourceNotFoundException;
 import com.app.pojos.Cart;
 import com.app.pojos.CartItem;
 import com.app.pojos.Product;
 import com.app.pojos.User;
 
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -41,6 +44,9 @@ public class CartServiceImpl implements CartService {
 	
 	@Autowired
 	private ModelMapper mapper;
+	
+	@Autowired
+	private EntityManager entityManager;
 
 	@Override
 	public String addToCart(AddToCartRequestDto cartDto) {
@@ -113,6 +119,53 @@ public class CartServiceImpl implements CartService {
 		cartResponse.setTotalAmount(totalAmout);
 		
 		return cartResponse;
+	}
+
+	@Override
+	public CartResponseDto updateMultipleCartItems(CartUpadateMultipleItemsRequestDto updatedItems) {
+		Cart cart = cartDao.findByUserId(updatedItems.getUserId()).orElseThrow(()-> new ResourceNotFoundException("Invalid user ID"));
+		
+		List<CartItemUpdateDto> updatedItemsList = updatedItems.getItems();
+
+		List<CartItem> existingCartItems = cartItemDao.findByCartId(cart.getId());
+		
+		for( CartItemUpdateDto items : updatedItemsList) {
+			
+		    Long productId = items.getProductId();
+		    double quantity = items.getQuantity();
+		    
+		    CartItem existingItem = existingCartItems.stream()
+								    .filter(item -> item.getProduct().getId().equals(productId))
+								    .findFirst()
+//								    .orElseThrow(()-> new ResourceNotFoundException("Product is not found "));
+								    .orElse(null);
+		    
+		    if(existingItem != null) {
+		    	if(quantity > 0) {
+		    		existingItem.setQuantity(quantity);
+		    		cartItemDao.save(existingItem);
+		    	}else {
+		    		cartItemDao.delete(existingItem);
+		    	}
+		    }else {
+		    	
+		    	CartItem newItem = new CartItem();
+		    	
+		    	newItem.setCart(cart);
+		    	
+		    	//instead of hitting database we can provide proxy of it 
+		    	Product product = entityManager.getReference(Product.class, productId);
+		    	newItem.setProduct(product);
+		    	
+		    	newItem.setQuantity(quantity);
+		    	
+		    	cartItemDao.save(newItem);
+		    	
+		    }
+		        
+		}
+		
+		return getCartByUserId(updatedItems.getUserId());
 	}
 	
 	
